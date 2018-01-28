@@ -1,4 +1,6 @@
-source 'https://rubygems.org'
+# source 'https://rubygems.org'
+source 'https://gems.ruby-china.org'
+
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -8,8 +10,8 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.4'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use mysql2 as the database for Active Record
+gem 'mysql2'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -39,6 +41,16 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'poltergeist'
+  gem 'phantomjs', '1.9.8.0', :require => 'phantomjs/poltergeist'
+
+  # gem 'database_cleaner', '1.4.1'
+  gem 'spring-commands-rspec', '1.0.4'
+
+  gem 'simplecov', '0.11.1'
 end
 
 group :development do
@@ -52,3 +64,10 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem 'twitter-bootstrap-rails'
+gem 'therubyracer'
+gem 'less-rails'
+
+# Use jquery as the JavaScript library
+gem 'jquery-rails'
