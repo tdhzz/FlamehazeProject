@@ -45,7 +45,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'poltergeist'
-  gem 'phantomjs', '1.9.8.0', :require => 'phantomjs/poltergeist'
 
   # gem 'database_cleaner', '1.4.1'
   gem 'spring-commands-rspec', '1.0.4'
