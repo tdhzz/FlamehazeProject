@@ -70,3 +70,5 @@ gem 'less-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+# Grape API Framework
+gem 'grape'
