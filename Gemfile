@@ -72,3 +72,5 @@ gem 'less-rails'
 gem 'jquery-rails'
 # Grape API Framework
 gem 'grape'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
