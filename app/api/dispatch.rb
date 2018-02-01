@@ -20,6 +20,11 @@ module Api
           end
         end
       end
+
+      add_swagger_documentation(
+          hide_documentation_path: true,
+          hide_format: true
+      )
     end
 
     mount_resource_and_action
