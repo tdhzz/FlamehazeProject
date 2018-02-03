@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20180202142148) do
     t.bigint "creator_id", null: false
     t.text "content", null: false
     t.boolean "enabled", default: true, null: false
+    t.integer "read_times", default: 0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["creator_id"], name: "fk_articles_reference_creator_id"
@@ -38,6 +39,7 @@ ActiveRecord::Schema.define(version: 20180202142148) do
     t.string "name", limit: 20, null: false
     t.boolean "enabled", default: true, null: false
     t.integer "uid", null: false
+    t.integer "level", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

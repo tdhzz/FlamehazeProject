@@ -43,7 +43,7 @@ group :development, :test do
   gem 'selenium-webdriver'
 
   gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'factory_bot_rails'
   gem 'poltergeist'
 
   # gem 'database_cleaner', '1.4.1'

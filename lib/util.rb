@@ -4,7 +4,7 @@ module Util
     begin
       result_json = yield
     rescue => e
-      Log.error e
+      Rails.logger.error e
       result_json = CommonException.new(ErrorCode::ERR_SYSTEM_EXCEPTION, e.message).result
     end
     result_json
@@ -16,12 +16,14 @@ module Util
     begin
       yield(response) if block_given?
     rescue CommonException => e
-      print_backtrace e
-      Log.error e
+      puts e.backtrace
+      Rails.logger.error e.backtrace
+      Rails.logger.error e
       response = e.result
     rescue Exception => e
-      print_backtrace e
-      Log.error e
+      puts e.backtrace
+      Rails.logger.error e.backtrace
+      Rails.logger.error e
       response = CommonException.new(ErrorCode::ERR_SYSTEM_EXCEPTION, e.message).result
     end
     response.as_json
