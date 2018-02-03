@@ -6,13 +6,19 @@ class Article < ActiveRecord::Base
   has_many    :article_comments
 
   def self.create_new params
-    response = {
-        'return_code'=>0
-    }
+    Util.try_rescue do |response|
+      User.find_by! id: params['creator_id'], enabled: true
+      article = Article.new(params.slice *(column_names - %w[id created_at updated_at]))
+      article.save!
+      response['id'] = article.id
+    end
   end
 
   def self.soft_delete params
-
+    Util.try_rescue do |response|
+      article = find_by! id: params['id'], creator_id: params['creator_id'], enabled: true
+      article.update! enabled: false
+    end
   end
 
 
