@@ -17,11 +17,13 @@ module Util
       yield(response) if block_given?
     rescue CommonException => e
       puts e.backtrace
+      puts e
       Rails.logger.error e.backtrace
       Rails.logger.error e
       response = e.result
     rescue Exception => e
       puts e.backtrace
+      puts e
       Rails.logger.error e.backtrace
       Rails.logger.error e
       response = CommonException.new(ErrorCode::ERR_SYSTEM_EXCEPTION, e.message).result

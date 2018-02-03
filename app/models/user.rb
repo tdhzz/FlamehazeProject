@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
     Util.try_rescue do |response|
       user_exist = User.find_by name: params['name'], enabled: true
       return response if user_exist.present?
-      user = User.new(params.slice *(column_names - %w[id created_at updated_at]))
+      user = User.new(params.slice *(column_names - %w[id created_at updated_at] + ["level"]))
       user.save!
       response['id'] = user.id
     end
