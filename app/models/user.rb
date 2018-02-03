@@ -9,9 +9,11 @@ class User < ActiveRecord::Base
   def self.create_new params
     Util.try_rescue do |response|
       user_exist = User.find_by name: params['name'], enabled: true
-      return response if user_exist.present?
-      user = User.new(params.slice *(column_names - %w[id created_at updated_at] + ["level"]))
-      user.save!
+      return CommonException.new(ErrorCode::ERR_USER_ALREADY_EXIST).result if user_exist.present?
+      # 创建的新用户默认为启用的，且等级为0
+      params['enabled'] = true
+      params['level'] = 0
+      user = User.create!(params.slice *(column_names - %w[id created_at updated_at]))
       response['id'] = user.id
     end
   end

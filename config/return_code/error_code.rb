@@ -8,5 +8,6 @@ module ErrorCode
   ERR_ARTICLE_COMMENT_CONTENT_INVALID                                             = 20004
   ERR_ARTICLE_READ_TIMES_INVALID                                                  = 20005
   ERR_USER_LEVEL_INVALID                                                          = 20006
+  ERR_USER_ALREADY_EXIST                                                          = 20007
 
 end
