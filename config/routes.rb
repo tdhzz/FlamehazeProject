@@ -21,7 +21,12 @@ Rails.application.routes.draw do
   # end
 
   require 'dispatch'
-  mount Api::Dispatch => '/'
+  mount Api::Dispatch => '/api'
 
   mount GrapeSwaggerRails::Engine => '/docs'
+
+  get 'users/create'
+  get 'articles/create'
+  get 'article_comments/create'
+
 end
