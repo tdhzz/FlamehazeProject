@@ -1,7 +1,9 @@
 require_relative 'boot'
 
 require 'rails/all'
+require_relative '../lib/util'
 require_relative 'return_code/error_code'
+require_relative 'return_code/common_exception'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
