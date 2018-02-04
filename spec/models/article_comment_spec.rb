@@ -16,7 +16,7 @@ RSpec.describe ArticleComment, type: :model do
     it "success" do
       rtn = Article.create_new params
       p rtn
-      expect(rtn['return_code']).to eq ErrorCode::SUCCESS
+      expect(rtn['return_code']).to eq ErrorCode::SUCCESS.to_s
     end
 
     it "error" do

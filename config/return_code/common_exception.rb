@@ -14,8 +14,8 @@ class CommonException < Exception
 
   def result
     {
-        'return_code' => @error_code.to_s,
-        'return_info' => @error_info.to_s
+        'return_code' => @error_code,
+        'return_info' => @error_info
     }
   end
 

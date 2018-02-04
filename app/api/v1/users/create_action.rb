@@ -16,8 +16,6 @@ module V1
 
         params do
           requires :name, type: String, allow_blank: false, desc: '用户昵称'
-          optional :enabled, type: Boolean, desc: '是否被禁用'
-          requires :uid, type: Integer, allow_blank: false, desc: 'UID码'
           requires :level, type: Integer, allow_blank: true, desc: '用户等级'
         end
 
