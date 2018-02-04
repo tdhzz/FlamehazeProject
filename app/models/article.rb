@@ -8,8 +8,9 @@ class Article < ActiveRecord::Base
   def self.create_new params
     Util.try_rescue do |response|
       User.find_by! id: params['creator_id'], enabled: true
-      article = Article.new(params.slice *(column_names - %w[id created_at updated_at]))
-      article.save!
+      params['enabled'] = true
+      params['read_times'] = 0
+      article = Article.create!(params.slice *(column_names - %w[id created_at updated_at]))
       response['id'] = article.id
     end
   end

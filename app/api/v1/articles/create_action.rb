@@ -17,8 +17,6 @@ module V1
         params do
           requires :creator_id, type: Integer, allow_blank: false, desc: '创建者ID'
           requires :content, type: String, allow_blank: false, desc: '文章内容'
-          optional :enabled, type: Boolean, desc: '是否被禁用'
-          optional :read_times, type: Integer, desc: '阅读次数'
         end
 
         post 'create' do
