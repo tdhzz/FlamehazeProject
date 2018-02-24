@@ -1,40 +1,32 @@
-class User < ActiveRecord::Base
-  validates_presence_of :name, message: ErrorCode::ERR_USER_NAME_INVALID.to_s
-  validates_presence_of :uid, message: ErrorCode::ERR_USER_UID_INVALID.to_s
-  validates_presence_of :level, message: ErrorCode::ERR_USER_LEVEL_INVALID.to_s
+class User < ApplicationRecord
+  authenticates_with_sorcery!
 
-  @@uid_counter = 0
+  attr_accessor :password, :password_confirmation
 
-  has_many :articles,          class_name: 'Article',        foreign_key: :creator_id
-  has_many :articles_comments, class_name: 'ArticleComment', foreign_key: :creator_id
+  validates_presence_of :email, message: "邮箱不能为空"
+  validates_format_of :email, message: "邮箱格式不合法",
+    with: /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/,
+    if: proc { |user| !user.email.blank? }
+  validates :email, uniqueness: true
+  validates_presence_of :name, message: "用户名不能为空"
+  validates :name, uniqueness: true
 
-  def self.create_new params
-    Util.try_rescue do |response|
-      user_exist = User.find_by name: params['name'], enabled: true
-      return CommonException.new(ErrorCode::ERR_USER_ALREADY_EXIST).result if user_exist.present?
-      params['level'] ||= 0
-      params['enabled'] = true
-      params['uid'] = uid_generate
-      user = User.create!(params.slice *(column_names - %w[id created_at updated_at]))
-      response['id'] = user.id
-    end
+  validates_presence_of :password, message: "密码不能为空",
+    if: :need_validate_password
+  validates_presence_of :password_confirmation, message: "密码确认不能为空",
+    if: :need_validate_password
+  validates_confirmation_of :password, message: "密码不一致",
+    if: :need_validate_password
+  validates_length_of :password, message: "密码最短为6位", minimum: 6,
+    if: :need_validate_password
+
+  def username
+    self.email.split('@').first
   end
 
-  def self.soft_delete params
-    Util.try_rescue do |response|
-      user = find_by! id: params['id'], uid: params['uid'], enabled: true
-      user.update! enabled: false
-    end
+  private
+  def need_validate_password
+    self.new_record? ||
+      (!self.password.nil? || !self.password_confirmation.nil?)
   end
-
-  class << self
-    private
-
-    def uid_generate
-      @@uid_counter += 1
-      Time.new.strftime('%Y') + format('%06d', @@uid_counter)
-    end
-  end
-
-
 end

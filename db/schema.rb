@@ -10,42 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202142148) do
+ActiveRecord::Schema.define(version: 20180224110942) do
 
-  create_table "article_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "article_id", null: false
-    t.bigint "creator_id", null: false
-    t.string "content", limit: 200, null: false
-    t.bigint "parent_comment_id"
-    t.boolean "enabled", default: true, null: false
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "title"
+    t.integer "weight", default: 0
+    t.integer "product_counter", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["article_id"], name: "fk_article_comments_reference_article_id"
-    t.index ["creator_id"], name: "fk_article_comments_reference_creator_id"
-    t.index ["parent_comment_id"], name: "fk_article_comments_reference_parent_comment_id"
+    t.string "ancestry"
+    t.index ["ancestry"], name: "index_categories_on_ancestry"
+    t.index ["title"], name: "index_categories_on_title"
   end
 
-  create_table "articles", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "creator_id", null: false
-    t.text "content", null: false
-    t.boolean "enabled", default: true, null: false
-    t.integer "read_times", default: 0, null: false
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "category_id"
+    t.string "title"
+    t.string "status", default: "false"
+    t.integer "amount", default: 0
+    t.text "description"
+    t.string "product_number"
+    t.decimal "msrp", precision: 10, scale: 2
+    t.decimal "price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["creator_id"], name: "fk_articles_reference_creator_id"
+    t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["product_number"], name: "index_products_on_product_number", unique: true
+    t.index ["status", "category_id"], name: "index_products_on_status_and_category_id"
+    t.index ["title"], name: "index_products_on_title"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "name", limit: 20, null: false
-    t.boolean "enabled", default: true, null: false
-    t.integer "uid", null: false
-    t.integer "level", null: false
+    t.string "email", null: false
+    t.string "name", null: false
+    t.string "crypted_password"
+    t.string "salt"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "activation_state"
+    t.string "activation_token"
+    t.datetime "activation_token_expires_at"
+    t.string "remember_me_token"
+    t.datetime "remember_me_token_expires_at"
+    t.string "reset_password_token"
+    t.datetime "reset_password_token_expires_at"
+    t.datetime "reset_password_email_sent_at"
+    t.index ["activation_token"], name: "index_users_on_activation_token"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
 
-  add_foreign_key "article_comments", "article_comments", column: "parent_comment_id", name: "fk_article_comments_reference_parent_comment_id"
-  add_foreign_key "article_comments", "articles", name: "fk_article_comments_reference_article_id"
-  add_foreign_key "article_comments", "users", column: "creator_id", name: "fk_article_comments_reference_creator_id"
-  add_foreign_key "articles", "users", column: "creator_id", name: "fk_articles_reference_creator_id"
 end

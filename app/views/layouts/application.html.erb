@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>FlamehazeRws</title>
+    <title>大学生闲置物品交易平台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= yield :stylesheets %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render 'layouts/menu' %>
+    <div class="container">
+      <% unless flash[:notice].blank? %>
+        <div class="alert a;ert-info"><%= flash[:notice] %></div>
+      <% end -%>
+      <%= yield %>
+    </div>
+
+    <%= javascript_include_tag 'application' %>
+    <%= yield :javascripts %>
   </body>
 </html>
