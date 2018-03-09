@@ -1,6 +1,6 @@
 # source 'https://rubygems.org'
 source 'https://gems.ruby-china.org'
-
+# source 'https://ruby.taobao.org'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -65,7 +65,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'twitter-bootstrap-rails'
-gem 'therubyracer'
 gem 'less-rails'
 
 # Use jquery as the JavaScript library
@@ -76,8 +75,15 @@ gem 'font-awesome-rails'
 gem 'sorcery'
 #stefankroes/ancestry --jiceng
 gem 'ancestry'
+gem 'will_paginate'
+gem 'paperclip', '~> 5.0.0'
+
 
 # Grape API Framework
 gem 'grape'
 gem 'grape-swagger'
 gem 'grape-swagger-rails'
+
+gem 'rest-client'
+gem 'faye-rails'
+gem 'thin'

@@ -1,0 +1,27 @@
+<h1>支付结果</h1>
+<div class="row">
+  <div class="container">
+    <div class="alert alert-success">
+      <h2><i class="fa fa-check-circle"></i> 支付成功</h2>
+    </div>
+    <div class="pull-right">
+      <form action="<%= @payment_url %>" method="post">
+        <% @pay_options.each do |k, v| %>
+          <input type="hidden" name="<%= k %>" value="<%= v %>" />
+        <% end -%>
+        <strong>¥<%= @payment.total_money %></strong>
+        <input type="submit" value="去送货" class="btn btn-success btn-lg" />
+      </form>
+    </div>
+    <div class="pull-right">
+      <form action="<%= @payment_url %>" method="post">
+        <% @pay_options.each do |k, v| %>
+          <input type="hidden" name="<%= k %>" value="<%= v %>" />
+        <% end -%>
+        <strong>¥<%= @payment.total_money %></strong>
+        <input type="submit" value="货物已到位" class="btn btn-success btn-lg" />
+      </form>
+    </div>
+    <a href="<%= root_path %>">继续购物</a>
+  </div>
+</div>
